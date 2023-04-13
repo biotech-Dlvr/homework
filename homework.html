@@ -10,77 +10,9 @@
       integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
       crossorigin="anonymous"
     />
+    <link href="src/styles.css" rel="stylesheet" type="text/css" />
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Weather App</title>
-    <style>
-      .card {
-        background-color: beige;
-      }
-      h1 {
-        font-size: 32px;
-        font-weight: bold;
-        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-      }
-
-      #currentLocation {
-        background-color: rgba(179, 243, 163, 0.842);
-        padding: 0.375rem 0.75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        border-radius: 0.375rem;
-        display: inline-block;
-        text-align: center;
-        text-decoration: none;
-        vertical-align: middle;
-        transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
-          border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-      }
-      .temperature {
-        font-weight: bold;
-        font-size: 30px;
-        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-      }
-
-      .time {
-        font-weight: lighter;
-        font-size: 10px;
-        font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-      }
-
-      .forecast {
-        display: inline;
-        border-radius: 10px;
-        background: rgb(226, 226, 142);
-        font-size: 12px;
-        font-weight: bold;
-        margin-bottom: 0;
-      }
-      .row {
-        font-size: 8px;
-        font-style: italic;
-      }
-      .firstday {
-        position: relative;
-        left: 8px;
-      }
-      .secondday {
-        position: relative;
-        left: 60px;
-      }
-      .thirdday {
-        position: relative;
-        left: 120px;
-      }
-      .forthday {
-        position: relative;
-        left: 180px;
-      }
-      .fifthday {
-        position: relative;
-        left: 230px;
-      }
-    </style>
   </head>
   <body>
     <div class="container">
@@ -116,71 +48,6 @@
         </div>
       </div>
     </div>
-    <script>
-      function displayFormatDate() {
-        let days = [
-          "Sunday",
-          "Monday",
-          "Tuesday",
-          "Wednesday",
-          "Thursday",
-          "Friday",
-          "Saturday",
-        ];
-        let date = new Date();
-        let currentDay = days[date.getDay()];
-        let currentTime = date.getHours();
-        let currentMinutes = date.getMinutes();
-        let formattedDate = `${currentDay}, ${currentTime}:${currentMinutes} `;
-
-        return formattedDate;
-      }
-      let h3 = document.querySelector("h3");
-      h3.innerHTML = displayFormatDate();
-
-      function searchCity(city) {
-        let apiKey = "2ff29bed3181c3526c35cc5408037f85";
-        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-        axios.get(apiUrl).then(displayWeatherCondition);
-      }
-      function displayTemperature(response) {
-        let temperature = Math.round(response.data.main.temp);
-        let temperatureElement = document.querySelector(".temperature");
-        temperatureElement.innerHTML = `${temperature}°C`;
-      }
-      function displayWeatherCondition(response) {
-        document.querySelector(".city").innerHTML = `${response.data.name}`;
-        document.querySelector(
-          ".humidity"
-        ).innerHTML = `Humidity ${response.data.main.humidity} %`;
-        document.querySelector(".wind").innerHTML = `Wind ${Math.round(
-          response.data.wind.speed
-        )} km/h`;
-        displayTemperature(response);
-      }
-
-      function searchLocation(position) {
-        let apiKey = "2ff29bed3181c3526c35cc5408037f85";
-        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${position.coords.latitude}&lon=${position.coords.longitude}&appid=${apiKey}&units=metric`;
-
-        axios.get(apiUrl).then(displayWeatherCondition);
-      }
-
-      function getCurrentLocation(event) {
-        event.preventDefault();
-        navigator.geolocation.getCurrentPosition(searchLocation);
-      }
-      function showFormValues(event) {
-        event.preventDefault();
-        let cityInput = document.querySelector("#city-input");
-        let h1 = document.querySelector("h1");
-        h1.innerHTML = `${cityInput.value}`;
-        searchCity(cityInput.value);
-      }
-      let searchEngineForm = document.querySelector("form");
-      searchEngineForm.addEventListener("submit", showFormValues);
-      let currentLocation = document.querySelector("#currentLocation");
-      currentLocation.addEventListener("click", getCurrentLocation);
-    </script>
+    <script src="src/index.js"></script>
   </body>
 </html>
